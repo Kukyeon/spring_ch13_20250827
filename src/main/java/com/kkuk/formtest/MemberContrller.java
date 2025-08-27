@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -22,6 +23,10 @@ public class MemberContrller {
 		return "login2";
 	}
 	
+	@RequestMapping(value = "/join")
+	public String join() {
+		return "join";
+	}
 	
 	@RequestMapping(value = "/loginOk")
 	public String loginOk(HttpServletRequest request, Model model, HttpSession session, HttpServletResponse response) {
@@ -60,4 +65,31 @@ public class MemberContrller {
 		}	
 	}
 	
+	@RequestMapping(value = "/boardlist/{bnum}")
+	public String boardlist(@PathVariable String bnum, Model model) { // 파라미터 이름 없이 전달 된 값 받아오기
+		
+		model.addAttribute("bnum", bnum);
+		
+		return "boardlist";
+	}
+	
+	
+	@RequestMapping(value = "/joinOk")
+	public String joinOk(HttpServletRequest request, Model model) {
+		String mid = request.getParameter("mid");
+		String mpw = request.getParameter("mpw");
+		String mname = request.getParameter("mname");
+		String mage = request.getParameter("mage");
+								
+		MemberDto memberDto = new MemberDto(mid, mpw, mname, mage);
+		model.addAttribute("memberDto", memberDto);
+		
+		return "joinOk";
+	}
+	 // 위 코드의 다른 방법  // memberdto 에 멤버변수와 form의 파라미터 이름이 반드시 일치해야함
+//	@RequestMapping(value = "/joinOk")
+//	public String joinOk(MemberDto memberDto, Model model) {
+//		model.addAttribute("memberDto", memberDto);
+//		return "joinOk";
+//	}
 }
