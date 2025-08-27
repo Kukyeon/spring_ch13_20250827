@@ -6,8 +6,10 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -28,7 +30,7 @@ public class MemberContrller {
 		return "join";
 	}
 	
-	@RequestMapping(value = "/loginOk")
+	@RequestMapping(value = "/loginOk", method = RequestMethod.POST)
 	public String loginOk(HttpServletRequest request, Model model, HttpSession session, HttpServletResponse response) {
 		
 		String mid = request.getParameter("mid"); // 클라이언트가 입력한 아이디값 불러오기
@@ -72,7 +74,7 @@ public class MemberContrller {
 		
 		return "boardlist";
 	}
-	
+
 	
 	@RequestMapping(value = "/joinOk")
 	public String joinOk(HttpServletRequest request, Model model) {
@@ -92,4 +94,13 @@ public class MemberContrller {
 //		model.addAttribute("memberDto", memberDto);
 //		return "joinOk";
 //	}
+	
+	
+	@RequestMapping(value = "/studentOk")
+	public String studentInfo(@ModelAttribute("sInfo") StudentInformationDto studentInformationDto, Model model) { // 파라미터 이름 없이 전달 된 값 받아오기
+		
+		//model.addAttribute("studentInformationDto", studentInformationDto);
+		
+		return "studentOk";
+	}
 }
